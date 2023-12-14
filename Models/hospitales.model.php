@@ -1,0 +1,105 @@
+<?php
+require_once('cls_conexion.model.php');
+class Clase_Hospitales
+{
+    public function todos()
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "SELECT * FROM `hospitales`";
+            $result = mysqli_query($con, $cadena);
+            return $result;
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+    public function uno($ID_hospital)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "SELECT * FROM `hospitales` WHERE ID_hospital=$ID_hospital";
+            $result = mysqli_query($con, $cadena);
+            return $result;
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+    public function insertar($Nombre, $Ciudad, $Numero_camas)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "INSERT INTO `hospitales`(`Nombre`, `Ciudad`, `Numero_camas`) VALUES('$Nombre', '$Ciudad', '$Numero_camas')";
+            $result = mysqli_query($con, $cadena);
+            return 'ok';
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+    public function actualizar($ID_hospital, $Nombre, $Ciudad, $Numero_camas)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "UPDATE `hospitales` SET `Nombre`='$Nombre', `Ciudad`='$Ciudad', `Numero_camas`='$Numero_camas' WHERE `ID_hospital`= $ID_hospital";
+            $result = mysqli_query($con, $cadena);
+            return "ok";
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+    public function eliminar($ID_hospital)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "DELETE from hospitales where ID_hospital=$ID_hospital";
+            $result = mysqli_query($con, $cadena);
+            return "ok";
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+
+    public function verificar_nombre($Nombre)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "SELECT count(*) as verificar_nombre FROM `hospitales` WHERE `Nombre`= '$Nombre'";
+            $result = mysqli_query($con, $cadena);
+            return $result;
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }
+
+  /* public function verificar_camas($Numero_camas)
+    {
+        try {
+            $con = new Clase_Conectar_Base_Datos();
+            $con = $con->ProcedimientoConectar();
+            $cadena = "SELECT count(*) as verificar_camas FROM `hospitales` WHERE `Numero_camas`= '$Numero_camas'";
+            $result = mysqli_query($con, $cadena);
+            return $result;
+        } catch (Throwable $th) {
+            return $th->getMessage();
+        } finally {
+            $con->close();
+        }
+    }*/
+}
